@@ -1,0 +1,12 @@
+db.sqlite3
+.idea
+*.xml
+/dairyapp/static/
+/dairyapp/migrations/
+/english_words_app/.env
+/english_words_app/p.py
+/english_words_app/data.json
+*.log
+__pycache__
+*.json
+/english_words/.env

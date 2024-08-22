@@ -1,5 +1,5 @@
-let ruGlobalWanish = true;
-let enGlobalWanish = false;
+let ruGlobalWanish = false;
+let enGlobalWanish = true;
 
 
 class Api {
