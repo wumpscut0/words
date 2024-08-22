@@ -53,16 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 entry.addEventListener("click", () => {
-                    entry.classList.toggle("white")
-//                    if (!entry.style.color) {
-//                        entry.style.color = "white"
-//					} else {
-//                         if (entry.style.color === "black") {
-//                             entry.style.color = "white";
-//                         } else {
-//                             entry.style.color = "black";
-//                         };
-//                    }
+                    if (entry.classList.contains("white")) {
+		                entry.classList.replace("white", "black");
+		            } else {
+		                entry.classList.replace("black", "white");
+		            };
                 });
             };
         });
@@ -72,9 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
         rows.forEach(row => {
             entry = row.querySelectorAll("td")[0];
             if (enGlobalWanish) {
-                entry.style.color = "black";
+                entry.classList.replace("white", "black")
             } else {
-                entry.style.color = "white";
+                entry.classList.replace("black", "white")
             };
         });
         enGlobalWanish = !enGlobalWanish;
@@ -84,9 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
         rows.forEach(row => {
             entry = row.querySelectorAll("td")[1];
             if (ruGlobalWanish) {
-                entry.style.color = "black";
+                entry.classList.replace("white", "black")
             } else {
-                entry.style.color = "white";
+                entry.classList.replace("black", "white")
             };
         });
         ruGlobalWanish = !ruGlobalWanish;
