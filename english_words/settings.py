@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+from os import getenv
 from pathlib import Path
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv(find_dotenv())
 
 ALLOWED_HOSTS = [
     "*",
@@ -25,12 +28,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)f66$q9k3s5rzq6gjcjf%wd@%kj8%ki0@$y%w&w(scj0_d(d5q'
+SECRET_KEY = getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-# Application definition
+# CORS_ALLOW_ALL_ORIGINS = True
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://127.0.0.1:8000",
+#     "http://localhost:8000",
+# ]
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "OPTIONS",
+#     "POST",
+# ]
+# CORS_ALLOW_HEADERS = [
+#     "content-type"
+#     # "x-csrftoken",
+#     "mode"
+# ]
+# CORS_ALLOW_CREDENTIALS = True
+# CSRF_COOKIE_NAME = 'csrftoken'
+# CSRF_COOKIE_SECURE = False  # Включите в True для HTTPS
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000"
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,7 +62,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "english_words_app"
+
+    "english_words_app",
+
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -50,6 +76,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'english_words.urls'
@@ -120,7 +148,39 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "english_words_app/static"
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "magic_words_log.log"
+        },
+        "stdout": {
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {
+        "file+stdout": {
+            "level": "DEBUG",
+            "handlers": ["file", "stdout"]
+        },
+        "file": {
+            "level": "DEBUG",
+            "handlers": ["file"]
+        },
+        "stdout": {
+            "level": "DEBUG",
+            "handlers": ["stdout"]
+        }
+    }
+}

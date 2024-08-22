@@ -1,0 +1,73 @@
+{% extends "english_words_app/base.html" %}
+
+{% block head %}
+    {% load static %}
+	<meta name="csrf-token" content="{{ csrf_token }}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+	<script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+	</script>
+    {{ block.super }}
+{% endblock %}
+
+{% block body %}
+	{% csrf_token %}
+    <div class="container">
+        <div class="row">
+            {% if not object_list %}
+                <h3 class="text-center w-100">No words so far</h3>
+            {% else %}
+                <div class="col-12">
+                    <table class="table table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th class="clickable" id="enCol">En</th>
+                                <th class="clickable" id="ruCol">Ru</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="words">
+                            {% for word in object_list %}
+                                <tr>
+                                    <td>{{ word.en }} ({{ word.transcription }})</td>
+                                    <td class="white">
+                                        {% for ru in word.ru %}
+                                            {{ ru }}{% if not forloop.last %},{% endif %}
+                                            {% if forloop.counter0|divisibleby:"2" and not forloop.last %}
+	                                            <br>
+	                                        {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% if word.pk in favorites %}
+                                            <button type="button" class="btn btn-danger btn-width" value="{{ word.pk }}:{{ user.pk }}">Remove</button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-primary btn-width" value="{{ word.pk }}:{{ user.pk }}">Add</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+	        {% endif %}
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <div class="btn-group">
+                    {% if is_paginated %}
+	                    {% if is_favorite %}
+	                        <a class="btn btn-primary btn-padding btn-width" href="{% url 'english_words_app:favorite_list' page=page %}?next=-1"><code>&lt</code> Previous</a>
+	                        <a class="btn btn-primary btn-padding btn-width" href="{% url 'english_words_app:favorite_list' page=page %}?next=1">Next <code>&gt</code></a>
+	                    {% else %}
+	                        <a class="btn btn-primary btn-padding btn-width" href="{% url 'english_words_app:word_list' page=page %}?next=-1"><code>&lt</code> Previous</a>
+	                        <a class="btn btn-primary btn-padding btn-width" href="{% url 'english_words_app:word_list' page=page %}?next=1">Next <code>&gt</code></a>
+                        {% endif %}
+	                {% endif %}
+                </div>
+            </div>
+	        <div class="col-12 d-flex justify-content-center align-items-center">
+		        <a class="btn btn-warning" href="{% url 'english_words_app:index' %}">Back</a>
+	        </div>
+        </div>
+    </div>
+{% endblock %}

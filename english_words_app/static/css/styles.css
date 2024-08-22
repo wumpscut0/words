@@ -1,0 +1,15 @@
+.clickable {
+    transition: 0.3 ease;
+}
+.clickable:hover {
+    cursor: pointer;
+    color: fuchsia;
+}
+
+.white {
+    color: white;
+}
+
+.btn-width {
+    width: 100px;
+}
