@@ -31,7 +31,7 @@
                             {% for word in object_list %}
                                 <tr>
                                     <td class="white">{{ word.en }} ({{ word.transcription }})</td>
-                                    <td>
+                                    <td class="white">
                                         {% for ru in word.ru %}
                                             {{ ru }}{% if not forloop.last %},{% endif %}
                                             {% if forloop.counter0|divisibleby:"2" and not forloop.last %}

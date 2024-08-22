@@ -1,10 +1,10 @@
-let ruGlobalWanish = false;
+let ruGlobalWanish = true;
 let enGlobalWanish = true;
 
 
 class Api {
-    // BASE_URL = "http://26.234.36.149:8000/api/v1/words";
-    BASE_URL = "http://localhost:8000/api/v1/words";
+     BASE_URL = "http://26.234.36.149:8000/api/v1/words";
+//    BASE_URL = "http://localhost:8000/api/v1/words";
     
     async removeWordFromFavorite(word_id, user_id) {
         return await fetch(`${this.BASE_URL}/delete?word_id=${word_id}&user_id=${user_id}`, {
@@ -53,11 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             } else {
                 entry.addEventListener("click", () => {
-                    if (entry.style.color === "white") {
-                        entry.style.color = "black";
-                    } else {
-                        entry.style.color = "white";
-                    };
+                    entry.classList.toggle("white")
+//                    if (!entry.style.color) {
+//                        entry.style.color = "white"
+//					} else {
+//                         if (entry.style.color === "black") {
+//                             entry.style.color = "white";
+//                         } else {
+//                             entry.style.color = "black";
+//                         };
+//                    }
                 });
             };
         });
